@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-VERSION=9.19
-PACKAGE="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs919/ghostscript-9.19.tar.gz"
+VERSION=9.21
+PACKAGE="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921/ghostscript-9.21.tar.gz"
 
 echo "-----> Installing Ghostscript" $VERSION
 BUILD_DIR=$1

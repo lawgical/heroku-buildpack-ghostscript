@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-VERSION=9.21
-PACKAGE="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921/ghostscript-9.21.tar.gz"
+$VERSION=9.21
 
-echo "-----> Installing Ghostscript" $VERSION
+echo "-----> Installing Ghostscript $VERSION using build directory $1"
+
 BUILD_DIR=$1
+PACKAGE="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921/ghostscript-9.21-linux-x86_64.tgz"
+BINARY="ghostscript-9.21-linux-x86_64/gs-921-linux-x86_64"
+LOCATION="$BUILD_DIR/vendor/gs"
 
-mkdir -p $LOCATION
+cd $BUILD_DIR
+mkdir -p $LOCATION/bin
 curl -L -O $PACKAGE -s
+tar xvf ghostscript-$VERSION-linux-x86_64.tgz
+mv $BINARY $LOCATION/bin/gs
 
-echo "-----> Building runtime environment for Ghostscript"
+echo "-----> Building runtime environment for Ghostscript to $LOCATION"
 
-tar xzvf ghostscript-$VERSION.tar.gz
-cd ghostscript-$VERSION
-./configure --disable-cups --disable-gtk --with-drivers=FILES
-make
-cp bin/gs ~/bin
+mkdir -p $BUILD_DIR/.profile.d
+echo "export PATH=\"\$HOME/vendor/gs/bin:\$PATH\"" > $BUILD_DIR/.profile.d/ghostscript.sh
 
 echo "Ghostscript version:"
-echo gs --version
-
-cd ~
-rm -rf ghostscript-$VERSION*
+echo `gs --version`
